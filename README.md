@@ -1,1 +1,1 @@
-# birdrecog
+This contains code from my 2015 science fair, developing a technique for identifying New Zealand birds based on ad-hoc recordings on unknown devices. The spectra.RData file contains the mean spectrums of the processed bird recordings. usethese.csv contains the metadata about the recordings. The analysis.R recording contains the processing steps of the script.
