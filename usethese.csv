@@ -1,0 +1,42 @@
+en,use,id,gen,sp,ssp,rec,cnt,loc,lat,lng,type,file,lic,url,quality,filename,sampling,reclen,bit
+Black Stilt,reference,34723,Himantopus,novaezelandiae,,Frank Lambert,New Zealand,on flats between Lake Tekapo and Lake Alexandrina (western shore),-43.943024,170.471935,calls made between probing in mud,http://www.xeno-canto.org/34723/download,http://creativecommons.org/licenses/by-nc-nd/4.0/,http://www.xeno-canto.org/34723,A,34723.mp3,44100,1323648,16
+Black Stilt,test,black-stilt,Himantopus,novaezelandiae,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,black-stilt.mp3,44100,6895872,16
+Chatham Is. Fantail,test,chatham-island-fantail,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,chatham-island-fantail.mp3,44100,4498560,16
+Chatham Is. Tui,test,chatham-island-tui,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,chatham-island-tui.mp3,44100,8408448,16
+Falcon,reference,nz-falcon-song-10,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,nz-falcon-song-10.mp3,44100,2026368,16
+Falcon,test,nz-falcon-song-12,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,nz-falcon-song-12.mp3,44100,1312128,16
+Kea,reference,198866,Nestor,notabilis,,Rob van Bemmelen,New Zealand,"near Homer Tunnel, South Island, New Zealand",-44.763,167.991,call,http://www.xeno-canto.org/198866/download,http://creativecommons.org/licenses/by-nc-sa/4.0/,http://www.xeno-canto.org/198866,A,198866.mp3,44100,2638080,16
+Kea,test,kea-song,Nestor,notabilis,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,kea-song.mp3,44100,2748672,16
+Little Spotted Kiwi,reference,88143,Apteryx,owenii,owenii,David Bradley,New Zealand,Kapiti Island,-40.8686647,174.9122315,"duet, song",http://www.xeno-canto.org/88143/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/88143,A,88143.mp3,44100,2269440,16
+Little Spotted Kiwi,test,93257,Apteryx,owenii,,Matthias Feuersenger,New Zealand,"Kapiti Island, New Zealand",-40.832,174.943,song,http://www.xeno-canto.org/93257/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/93257,A,93257.mp3,44100,1782144,16
+Morepork,reference,90254,Ninox,novaeseelandiae,,George Armistead,New Zealand,"Pakihi, Okarito",-43.2417,170.2167,?,http://www.xeno-canto.org/90254/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/90254,A,90254.mp3,44100,1666944,16
+Morepork,test,morepork-song,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,morepork-song.mp3,44100,4563072,16
+Bellbird,reference,46601,Anthornis,melanura,,Daniel Lane,New Zealand,"Banks Pensinsula, S side near Little Creek, South Island",-43.744,172.876,"call, song",http://www.xeno-canto.org/46601/download,http://creativecommons.org/licenses/by-nc-sa/3.0/,http://www.xeno-canto.org/46601,A,46601.mp3,44100,2535552,16
+Bellbird,test,96768,Anthornis,melanura,melanura,Justin Doyle,New Zealand,Hanmer Springs Forest,-42.525,172.835,Song,http://www.xeno-canto.org/96768/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/96768,A,96768.mp3,44100,5051520,16
+Fantail,reference,fantail-02,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,fantail-02.mp3,44100,641664,16
+Fantail,test,fantail-10,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,fantail-10.mp3,44100,5189760,16
+Kaka,reference,207311,Nestor,meridionalis,,Dan Lane,New Zealand,"Oban, Southland District, Southland",-46.8979,168.1252,call,http://www.xeno-canto.org/207311/download,http://creativecommons.org/licenses/by-nc-sa/4.0/,http://www.xeno-canto.org/207311,A,207311.mp3,44100,6303744,16
+Kaka,test,88155,Nestor,meridionalis,septentrionalis,David Bradley,New Zealand,Kapiti Island,-40.8687,174.9123,?,http://www.xeno-canto.org/88155/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/88155,A,88155.mp3,44100,1615104,16
+North Is. Saddleback,reference,114331,Philesturnus,rufusater,,George Wagner,New Zealand,Tiritiri Matangi Island ,-36.601,174.8903,song,http://www.xeno-canto.org/114331/download,http://creativecommons.org/licenses/by-nc-sa/3.0/,http://www.xeno-canto.org/114331,A,114331.mp3,44100,906624,16
+North Is. Saddleback,test,north-island-saddleback-song,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,north-island-saddleback-song.mp3,44100,4916736,16
+Paradise Shelduck,reference,46605,Tadorna,variegata,,Daniel Lane,New Zealand,"Travis Wetland Nature Sanctuary, Christchurch, South Island",-43.488,172.69,call,http://www.xeno-canto.org/46605/download,http://creativecommons.org/licenses/by-nc-sa/3.0/,http://www.xeno-canto.org/46605,A,46605.mp3,44100,3868416,16
+Paradise Shelduck,test,paradise-duck-song,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,paradise-duck-song.mp3,44100,3195648,16
+Red-crowned Parakeet,reference,88148,Cyanoramphus,novaezelandiae,,David Bradley,New Zealand,Kapiti Island,-40.8687,174.9123,call,http://www.xeno-canto.org/88148/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/88148,A,88148.mp3,44100,1354752,16
+Red-crowned Parakeet,test,red-crowned-parakeet-song-4,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,red-crowned-parakeet-song-4.mp3,44100,885888,16
+Silvereye,reference,silvereye-song-22sy,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,silvereye-song-22sy.mp3,44100,7672320,16
+Tui,reference,33764,Prosthemadera,novaeseelandiae,,Patrik Åberg,New Zealand,Tiritiri Matangi Island ,-36.60099,174.890327,Song,http://www.xeno-canto.org/33764/download,http://creativecommons.org/licenses/by-nc-sa/3.0/,http://www.xeno-canto.org/33764,A,33764.mp3,44100,5215104,16
+Tui,test,70960,Prosthemadera,novaeseelandiae,,Sandra V. Valderrama,New Zealand,Hunua Ranges,-37.0814,175.1995,song,http://www.xeno-canto.org/70960/download,http://creativecommons.org/licenses/by-nc-nd/2.5/,http://www.xeno-canto.org/70960,A,70960.mp3,44100,1128960,16
+Weka,reference,114339,Gallirallus,australis,australis,George Wagner,New Zealand,"Bullock Creek Road, Paparoa National Park, Buller District, West Coast",-42.0973,171.4043,song,http://www.xeno-canto.org/114339/download,http://creativecommons.org/licenses/by-nc-sa/3.0/,http://www.xeno-canto.org/114339,A,114339.mp3,44100,569088,16
+Weka,test,buff-weka-song,,,,,,,NA,NA,,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,http://www.doc.govt.nz/nature/native-animals/birds/bird-songs-and-calls/,,A,buff-weka-song.mp3,44100,3701376,16
+phone1,self,phone1,,,,,,,,,,,,,,,,,
+phone2,self,phone2,,,,,,,,,,,,,,,,,
+phone3,self,phone3,,,,,,,,,,,,,,,,,
+ipod1,self,ipod1,,,,,,,,,,,,,,,,,
+ipod2,self,ipod2,,,,,,,,,,,,,,,,,
+ipod3,self,ipod3,,,,,,,,,,,,,,,,,
+voicer1,self,voicer1,,,,,,,,,,,,,,,,,
+voicer2,self,voicer2,,,,,,,,,,,,,,,,,
+voicer3,self,voicer3,,,,,,,,,,,,,,,,,
+camera1,self,camera1,,,,,,,,,,,,,,,,,
+camera2,self,camera2,,,,,,,,,,,,,,,,,
+camera3,self,camera3,,,,,,,,,,,,,,,,,
