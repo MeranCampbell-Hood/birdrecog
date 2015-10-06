@@ -2,6 +2,8 @@ rm(list=ls())
 library(tuneR)
 library(seewave)
 library(tidyr)
+library(ggplot2)
+
 oldpar <- par()
 
 bestguesses <- function(nameddistancematrix){
@@ -12,13 +14,23 @@ topref$bird <- row.names(topref)
 return(topref)
 }
 
+###figure1
+tui <- readMP3("30 Tui-Song-50.Mp3.mp3")
+penguin <- readMP3("35 Yellow-Eyed-Penguin.Mp3.mp3")
+png(filename = "figure1a.png",width = 16, height = 8, units = "cm", res=150)
+spectro(tui, flim=c(0.5,6), main="a) Tui recording")
+dev.off()
+png(filename = "figure1b.png",width = 16, height = 8, units = "cm", res=150)
+spectro(penguin, flim=c(0.5,6), main="b) Penguin recording")
+dev.off()
+######
 
 usethese <- read.csv("~/nbu/birding/Sep/usethese.csv")
-prepFiles <- list.files(path="xenoprep", pattern=".wav$")
 exmplars <- usethese
-exmplars$wavs <- paste("~/nbu/birding/Sep/xenoprep/",exmplars$id, "_mod.wav", sep="")
-#listOfSoundsE <- lapply(exmplars$wavs, readWave)
-#specia <- lapply(listOfSoundsE, function(x){meanspec(x, f=f, plot = FALSE, identity=TRUE)})
+# prepFiles <- list.files(path="xenoprep", pattern=".wav$")
+# exmplars$wavs <- paste("~/nbu/birding/Sep/xenoprep/",exmplars$id, "_mod.wav", sep="")
+# listOfSoundsE <- lapply(exmplars$wavs, readWave)
+# specia <- lapply(listOfSoundsE, function(x){meanspec(x, f=f, plot = FALSE, identify=TRUE)})
 #save(specia, file="spectra.RData")
 load("spectra.RData")
 referenceset <- sort(which(usethese$use == "reference"))
@@ -27,6 +39,23 @@ referenceandmyset <- sort(c(which(usethese$use == "reference"),which(usethese$us
 SongA <- rep(1:nrow(usethese), each= length(referenceset)) #all songs
 SongB <- rep(referenceset, length.out=length(SongA)) #comparison set
 pairs <- data.frame(SongA,SongB)
+
+###figure 2
+## silvereye is spectrum 25, fantail is spectrum 15, falcon is spectrum 5
+silv <- data.frame(specia[[25]])
+fant <- data.frame(specia[[15]])
+falc <- data.frame(specia[[5]])
+silv$species <- "silvereye"
+fant$species <- "fantail"
+falc$species <- "falcon"
+mnspecs <- rbind(silv, fant, falc)
+png(filename = "figure2_meanspecscomp.png",width = 16, height = 8, units = "cm", res=150)
+ggplot(data=mnspecs, aes(x=x, y=y, group=species, colour=species)) +
+  geom_line() + xlab("frequencies") + ylab("Normalised Amplitude") + 
+  ggtitle("Comparison of mean spectrums from 3 different species") +     # Set title
+  theme_bw()
+dev.off()
+####
 
 ########## get kl.distance closeness of only references
 kpairs <- pairs[pairs$SongA %in% referenceset,]
@@ -109,9 +138,9 @@ ymax <- max(secondcomponent) + 0.5
 pchval <- rep(15, times=nrow(klwide))
 pchval[grep("test", row.names(klwidePCA$x))] <- 19 
 gval <- (klwidePCA$x[,3]-min(klwidePCA$x[,3]))/(max(klwidePCA$x[,3])-min(klwidePCA$x[,3]))
-png("fig6_reftest_klpcascatter.png", width=6, height=4, units="in", res=300)
+png("fig7a_reftest_klpcascatter.png", width=6, height=4, units="in", res=300)
 par(mar=c(4,4,1,1))
-plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax))
+plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax), main="7a) KL distance")
 pchval <- rep(0, times=nrow(klwide))
 pchval[grep("test", row.names(klwidePCA$x))] <- 1 
 points(firstcomponent, secondcomponent, pch=pchval, cex=0.8)
@@ -162,9 +191,9 @@ ymax <- max(secondcomponent) + 0.5
 pchval <- rep(15, times=nrow(lgwidePCA$x))
 pchval[grep("test", row.names(lgwidePCA$x))] <- 19 
 gval <- (lgwidePCA$x[,3]-min(lgwidePCA$x[,3]))/(max(lgwidePCA$x[,3])-min(lgwidePCA$x[,3]))
-png("fig7_reftest_lgpcascatter.png", width=6, height=4, units="in", res=300)
+png("fig7b_reftest_lgpcascatter.png", width=6, height=4, units="in", res=300)
 par(mar=c(4,4,1,1))
-plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax))
+plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax), , main="7b) Logspec")
 pchval <- rep(0, times=nrow(lgwidePCA$x))
 pchval[grep("test", row.names(lgwidePCA$x))] <- 1 
 points(firstcomponent, secondcomponent, pch=pchval, cex=0.8)
@@ -212,9 +241,9 @@ ymax <- max(secondcomponent) + 0.5
 pchval <- rep(15, times=nrow(dswidePCA$x))
 pchval[grep("test", row.names(dswidePCA$x))] <- 19 
 gval <- (dswidePCA$x[,3]-min(dswidePCA$x[,3]))/(max(dswidePCA$x[,3])-min(dswidePCA$x[,3]))
-png("fig8_reftest_dspcascatter.png", width=6, height=4, units="in", res=300)
+png("fig7c_reftest_dspcascatter.png", width=6, height=4, units="in", res=300)
 par(mar=c(4,4,1,1))
-plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax))
+plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax), main="7c) Diffspec")
 pchval <- rep(0, times=nrow(dswidePCA$x))
 pchval[grep("test", row.names(dswidePCA$x))] <- 1 
 points(firstcomponent, secondcomponent, pch=pchval, cex=0.8)
@@ -304,4 +333,29 @@ dspcapicks <- dspcapicks[order(dspcapicks$DSpBird),]
 
 guesses <- cbind(kdpicks,kpcadpicks, lgdpicks, lgpdpicks, dsldpicks, dspcapicks)
 write.csv(guesses, file="guesses.csv", row.names = FALSE)
+
+####################
+#simlation estimating how likely 3 picks of 2 species and 1 of 3 (or better) is
+
+sim <-function(){
+  testset <- 1:14
+  test1 <- sample(testset, 4, replace=TRUE)
+  test2 <- sample(testset, 4, replace=TRUE)
+  test3 <- sample(testset, 4, replace=TRUE)
+  l1 <- length(tapply(test1,test1,length))
+  l2 <- length(tapply(test2,test2,length))
+  l3 <- length(tapply(test3,test3,length))
+  lorder <- sort(c(l1,l2,l3))
+  if (lorder[1] <= 2 & lorder[2] <= 2 & lorder[3] <= 3){
+    return(1)
+  } else {
+    return(0)
+  }
+}
+
+isgood <- replicate(100000,sim())
+
+print(sum(isgood)/length(isgood))
+#####
+
 
