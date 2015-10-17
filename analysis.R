@@ -1,44 +1,51 @@
-rm(list=ls())
-library(tuneR)
-library(seewave)
-library(tidyr)
-library(ggplot2)
+rm(list=ls()) #clearing variables
+library(tuneR) #reading in sounds
+library(seewave) #analysing sounds
+library(tidyr) #reorganising data
+library(ggplot2) #making fancy graphs
 
-oldpar <- par()
+oldpar <- par() #stores current graph settings
 
 bestguesses <- function(nameddistancematrix){
 inorder <- as.data.frame(apply(as.matrix(nameddistancematrix), 1, function(x){(names(x)[order(x)])}))
+#rearranges data in order of closeness; does this for each line
 topref <- data.frame(t(apply(inorder, 2, function(x){(x[grep("reference",x)])[1:3]})))
+#only for comparisons with reference samples rather than phone recordings
 topref <- topref[grep("test|self",row.names(topref)),]
+#get closests 3 species names 
 topref$bird <- row.names(topref)
+#stores changes in data + returns
 return(topref)
-}
+}   #got help with this
+
+# NB not all graphs made got used
 
 ###figure1
-tui <- readMP3("30 Tui-Song-50.Mp3.mp3")
-penguin <- readMP3("35 Yellow-Eyed-Penguin.Mp3.mp3")
-png(filename = "figure1a.png",width = 16, height = 8, units = "cm", res=150)
-spectro(tui, flim=c(0.5,6), main="a) Tui recording")
+tui <- readMP3("30 Tui-Song-50.Mp3.mp3") #read in tui file
+penguin <- readMP3("35 Yellow-Eyed-Penguin.Mp3.mp3") #read in penguin file
+png(filename = "figure1a.png",width = 16, height = 8, units = "cm", res=150) #make image file
+spectro(tui, flim=c(0.5,6), main="a) Tui recording") #put spec in image file
 dev.off()
 png(filename = "figure1b.png",width = 16, height = 8, units = "cm", res=150)
 spectro(penguin, flim=c(0.5,6), main="b) Penguin recording")
-dev.off()
+dev.off() #stop making image
 ######
 
-usethese <- read.csv("~/nbu/birding/Sep/usethese.csv")
+usethese <- read.csv("~/nbu/birding/Sep/usethese.csv") #information about recordings
 exmplars <- usethese
 # prepFiles <- list.files(path="xenoprep", pattern=".wav$")
 # exmplars$wavs <- paste("~/nbu/birding/Sep/xenoprep/",exmplars$id, "_mod.wav", sep="")
 # listOfSoundsE <- lapply(exmplars$wavs, readWave)
 # specia <- lapply(listOfSoundsE, function(x){meanspec(x, f=f, plot = FALSE, identify=TRUE)})
 #save(specia, file="spectra.RData")
-load("spectra.RData")
+### having read in .wavfiles, was used as r.data file which was faster
+load("spectra.RData") #contains meanspec of all recordings
 referenceset <- sort(which(usethese$use == "reference"))
 referenceandtestset <- sort(c(which(usethese$use == "reference"),which(usethese$use == "test")))
-referenceandmyset <- sort(c(which(usethese$use == "reference"),which(usethese$use == "self")))
+referenceandmyset <- sort(c(which(usethese$use == "reference"),which(usethese$use == "self"))) #splitting data into sets
 SongA <- rep(1:nrow(usethese), each= length(referenceset)) #all songs
 SongB <- rep(referenceset, length.out=length(SongA)) #comparison set
-pairs <- data.frame(SongA,SongB)
+pairs <- data.frame(SongA,SongB) #every possible pair of A and B
 
 ###figure 2
 ## silvereye is spectrum 25, fantail is spectrum 15, falcon is spectrum 5
@@ -53,53 +60,53 @@ png(filename = "figure2_meanspecscomp.png",width = 16, height = 8, units = "cm",
 ggplot(data=mnspecs, aes(x=x, y=y, group=species, colour=species)) +
   geom_line() + xlab("frequencies") + ylab("Normalised Amplitude") + 
   ggtitle("Comparison of mean spectrums from 3 different species") +     # Set title
-  theme_bw()
+  theme_bw() #making line graph of three bird species
 dev.off()
 ####
 
 ########## get kl.distance closeness of only references
-kpairs <- pairs[pairs$SongA %in% referenceset,]
-kpairs$kldist <- 99999
+kpairs <- pairs[pairs$SongA %in% referenceset,] #only the pairs where song A is in the reference group
+kpairs$kldist <- 99999 #needs something there
 for (i in 1:nrow(kpairs)){
-  item1 <- (specia[[kpairs[i,"SongA"]]])
-  item2 <- (specia[[kpairs[i,"SongB"]]])
-  AtoB <- (kl.dist(item1, item2))$D
-  BtoA <- (kl.dist(item2, item1))$D
-  kpairs$kldist[i] <- (AtoB + BtoA) / 2
+  item1 <- (specia[[kpairs[i,"SongA"]]]) #get spec of whatever song A is in that row
+  item2 <- (specia[[kpairs[i,"SongB"]]]) #same for song B
+  AtoB <- (kl.dist(item1, item2))$D #find KLdist between
+  BtoA <- (kl.dist(item2, item1))$D #same, might be different
+  kpairs$kldist[i] <- (AtoB + BtoA) / 2 #average them
 }
-kpairs$kldist <- kpairs$kldist / max(kpairs$kldist)
-klwide <- spread(kpairs, key=SongB, value=kldist)
-row.names(klwide) <- paste(exmplars$en[referenceset], exmplars$use[referenceset])
-klwide$SongA <- NULL
-kd <- dist(as.matrix(klwide))
+kpairs$kldist <- kpairs$kldist / max(kpairs$kldist) #normalise against longest distance
+klwide <- spread(kpairs, key=SongB, value=kldist) #changes table from long to wide
+row.names(klwide) <- paste(exmplars$en[referenceset], exmplars$use[referenceset]) #fixes row names/ means row name is species
+klwide$SongA <- NULL #gets rid of serial numbers of species recording as has name
+kd <- dist(as.matrix(klwide)) #builds a distance matrix of data, ie. how distant everything is as one number
 khc <- hclust(kd) 
 png("fig3_refsamples_only_raw.png", width=6, height=4, units="in", res=300)
 plot(khc, cex=0.5, xlab="Species")
-dev.off()
-klwidePCA <- prcomp(klwide, scale=TRUE)
+dev.off() #builds cluster dendrogram from data
+klwidePCA <- prcomp(klwide, scale=TRUE) #making PCA
 summary(klwidePCA) # first 3 components explain 89.87% of variation
 klpd <- dist(as.matrix(klwidePCA$x[,1:3]))
 klphc <- hclust(klpd)
 png("fig4_refsamples_only_pca.png", width=6, height=4, units="in", res=300)
 plot(klphc, cex=0.5, xlab="Species")
-dev.off()
+dev.off() #makes cluster dendrogram of PCA
 firstcomponent <- klwidePCA$x[,1]
 secondcomponent <- klwidePCA$x[,2]
 xmin <- min(firstcomponent) - 0.5
-xmax <- max(firstcomponent) + 2
+xmax <- max(firstcomponent) + 2 #fixing graph axes
 ymin <- min(secondcomponent) - 0.5
 ymax <- max(secondcomponent) + 0.5
-pchval <- rep(15, times=nrow(klwide))
-gval <- (klwidePCA$x[,3]-min(klwidePCA$x[,3]))/(max(klwidePCA$x[,3])-min(klwidePCA$x[,3]))
+pchval <- rep(15, times=nrow(klwide)) #sets default value for shape
+gval <- (klwidePCA$x[,3]-min(klwidePCA$x[,3]))/(max(klwidePCA$x[,3])-min(klwidePCA$x[,3])) #amount of grey = shading based on PCA 3rd value
 png("fig5_refsamples_only_pcascatter.png", width=6, height=4, units="in", res=300)
 plot(firstcomponent, secondcomponent, pch=pchval, cex=0.8, col=grey(gval),  frame.plot=F, ylim=c(ymin,ymax), xlim=c(xmin,xmax))
 par(mar=c(4,4,1,1))
 pchval <- rep(0, times=nrow(klwide))
-points(firstcomponent, secondcomponent, pch=pchval, cex=0.8)
+points(firstcomponent, secondcomponent, pch=pchval, cex=0.8) #plot values, then plots shape border
 text(x = firstcomponent, y = secondcomponent, labels= exmplars$en[referenceset], cex=0.5,pos=4)
-text(x=xmax, y=ymax, labels="point shading is 3rd principle component", cex=0.5,pos=2, font=3)
-legend(x=xmax-1, y=ymax-0.5, "Species", pch=0, cex=0.5)
-dev.off()
+text(x=xmax, y=ymax, labels="point shading is 3rd principle component", cex=0.5,pos=2, font=3) #auxiliary text
+legend(x=xmax-1, y=ymax-0.5, "Species", pch=0, cex=0.5) #graph key
+dev.off() #making scatter graph
 par(mar=oldpar$mar)
 
 ###########kldist of test samples vs reference
@@ -111,7 +118,7 @@ for (i in 1:nrow(kpairs)){
   AtoB <- (kl.dist(item1, item2))$D
   BtoA <- (kl.dist(item2, item1))$D
   kpairs$kldist[i] <- (AtoB + BtoA) / 2
-}
+} #same again
 kpairs$kldist <- kpairs$kldist / max(kpairs$kldist)
 klwide <- spread(kpairs, key=SongB, value=kldist)
 row.names(klwide) <- paste(exmplars$en[as.integer(row.names(klwide))], exmplars$use[as.integer(row.names(klwide))])
@@ -128,6 +135,8 @@ kpcadpicks <- bestguesses(klpd)
 write.csv(kpcadpicks, file="kdpcapicks.csv", row.names = FALSE)
 klphc <- hclust(klpd)
 plot(klphc, cex=0.5, main="KL distance. Sound similarities of example recordings\n based on first 3 Principle Components", xlab="Species")
+
+#same as ref except uses different group at the start
 
 firstcomponent <- klwidePCA$x[,1]
 secondcomponent <- klwidePCA$x[,2]
@@ -204,7 +213,7 @@ text(x = firstcomponent, y = secondcomponent, labels= legendtext, cex=0.5,pos=4)
 text(x=xmax, y=ymax, labels="point shading is 3rd principle component", cex=0.5,pos=2, font=3)
 legend(x=xmax-1, y=ymax-0.5, c("Reference","Test"), pch=c(0,1), cex=0.5)
 dev.off()
-par(mar=oldpar$mar)
+par(mar=oldpar$mar) #using logspec
 #diffspec
 dpairs <- pairs[pairs$SongA %in% referenceandtestset,]
 dpairs$kldist <- 99999
@@ -254,7 +263,7 @@ text(x = firstcomponent, y = secondcomponent, labels= legendtext, cex=0.5,pos=4)
 text(x=xmax, y=ymax, labels="point shading is 3rd principle component", cex=0.5,pos=2, font=3)
 legend(x=xmax-1, y=ymax-0.5, c("Reference","Test"), pch=c(0,1), cex=0.5)
 dev.off()
-par(mar=oldpar$mar)
+par(mar=oldpar$mar) #same but using diffspec
 
 ################my recordings
 
@@ -334,6 +343,8 @@ dspcapicks <- dspcapicks[order(dspcapicks$DSpBird),]
 guesses <- cbind(kdpicks,kpcadpicks, lgdpicks, lgpdpicks, dsldpicks, dspcapicks)
 write.csv(guesses, file="guesses.csv", row.names = FALSE)
 
+#only used kl distance, saved results as spreadsheet; used my recordsing vs references
+
 ####################
 #simlation estimating how likely 3 picks of 2 species and 1 of 3 (or better) is
 
@@ -358,4 +369,4 @@ isgood <- replicate(100000,sim())
 print(sum(isgood)/length(isgood))
 #####
 
-
+# brute force test
